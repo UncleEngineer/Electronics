@@ -66,13 +66,23 @@ def CheckColor(b1,b2,b3,b4='gold'):
 
 	if cal >= 1000000000:
 		prefix = 'G'
-		res = str(cal)[:-9] + prefix
+		if str(cal)[-9] != '0':
+			res = str(cal)[:-9] + prefix + str(cal)[-9]
+		else:
+			res = str(cal)[:-9] + prefix
 	elif cal >= 1000000:
 		prefix = 'M'
-		res = str(cal)[:-6] + prefix
+		if str(cal)[-6] != '0':
+			res = str(cal)[:-6] + prefix + str(cal)[-6]
+		else:
+			res = str(cal)[:-6] + prefix
 	elif cal >= 1000:
 		prefix = 'k'
-		res = str(cal)[:-3] + prefix
+		# 3400
+		if str(cal)[-3] != '0':
+			res = str(cal)[:-3] + prefix + str(cal)[-3]
+		else:
+			res = str(cal)[:-3] + prefix
 	else:
 		res = ''
 	print('ตัวต้านทานตัวนี้มีค่า: {:,d} โอห์ม ( {}Ω )'.format(cal,res))
@@ -106,7 +116,7 @@ canvas.place(x=200,y=280)
 box1 = canvas.create_rectangle(0,0,50,50,fill='red')
 box2 = canvas.create_rectangle(100,0,150,50,fill='green')
 box3 = canvas.create_rectangle(200,0,250,50,fill='blue')
-box4 = canvas.create_rectangle(300,0,350,50,fill='yellow')
+box4 = canvas.create_rectangle(300,0,350,50,fill='gold')
 
 F1 = Frame(GUI)
 F1.place(x=50,y=350)
@@ -123,17 +133,21 @@ def Change(bcl,b,v):
 		v_c1.set(bcl)
 		cvalue = resistor.get() + v
 		resistor.set(cvalue)
+		B2.configure(state='disabled')
 	elif b == 2:
 		v_c2.set(bcl)
 		cvalue = resistor.get() + v
 		resistor.set(cvalue)
+		B3.configure(state='disabled')
 	elif b == 3:
 		v_c3.set(bcl)
 		resistor.set(CheckColor(v_c1.get(),v_c2.get(),v_c3.get()))
+		B4.configure(state='disabled')
 	else:
 		v_c4.set(v)
-		cvalue = resistor.get() + v
+		cvalue = resistor.get() + ' ' + v
 		resistor.set(cvalue)
+		B5.configure(state='disabled')
 	
 	global allbutton
 	bcolor = {1:box1,2:box2,3:box3,4:box4}
@@ -180,5 +194,20 @@ B4 = ttk.Button(GUI,text='Color 3',command=c3)
 B4.place(x=380,y=400,width=90)
 B5 = ttk.Button(GUI,text='Color 4',command=c4)
 B5.place(x=480,y=400,width=90)
+
+def Reset():
+	resistor.set('')
+	v_c1.set('')
+	v_c2.set('')
+	v_c3.set('')
+	v_c4.set('')
+	B2.configure(state='enabled')
+	B3.configure(state='enabled')
+	B4.configure(state='enabled')
+	B5.configure(state='enabled')
+
+
+BR = ttk.Button(GUI,text='Reset',command=Reset)
+BR.place(x=600,y=400,width=90)
 
 GUI.mainloop()
