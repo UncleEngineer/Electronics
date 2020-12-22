@@ -15,7 +15,7 @@ pip install electronics
 import electronics
 ```
 
-เปิด cmd / terminal ขึ้นมาแล้วพิมพ์...
+หรือเปิด cmd / terminal ขึ้นมาแล้วพิมพ์...
 
 ```python
 python -m electronics
