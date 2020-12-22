@@ -60,7 +60,7 @@ def CheckColor(b1,b2,b3,b4='gold'):
 	print('Band 2: {} digit: {}'.format(b2, colors2[b2]))
 	print('Band 3: {} multiplier: {}'.format(b3, colors3[b3]))
 	print('Band 4: {} torerance: {}'.format(b4, colors4[b4]))
-	cal = float(colors1[b1] + colors2[b2]) * float(colors3[b3])
+	cal = int(colors1[b1] + colors2[b2]) * int(colors3[b3])
 
 	if cal >= 1000000000:
 		prefix = 'G'
